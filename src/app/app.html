@@ -1,71 +1,68 @@
-<div class="flex flex-col items-center bg-gradient-to-br from-[#0a0a0a] to-[#1a1a2e] min-h-screen py-4 px-4 space-y-4 font-sans">
+<div
+  class="flex flex-col items-center bg-gradient-to-br from-[#0a0a0a] to-[#1a1a2e] min-h-screen py-4 px-4 space-y-4 font-sans">
 
   <div class="w-full max-w-6xl rounded-3xl overflow-hidden transition-all duration-700"
-       [class.winner-glow]="equipoGanador === 'luz'">
+    [class.winner-glow]="equipoGanador === 'luz'">
     <div class="relative">
-      <div class="absolute inset-0 rounded-3xl gold-aura animate-aura" *ngIf="equipoGanador === 'luz'"></div>
-      
-      <div class="flex items-center justify-between px-3 py-2 relative overflow-hidden neon-gold-header">
+      <div class="absolute inset-0 rounded-3xl explosive-aura animate-aura" *ngIf="equipoGanador === 'luz'"></div>
+
+      <div class="flex items-center justify-between px-3 py-2 relative overflow-hidden explosive-header">
         <div class="absolute inset-0 bg-black opacity-60"></div>
-        <h2 class="text-3xl font-extrabold flex items-center gap-3 relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">
-          <span class="text-3xl">⚡</span> 
+        <h2
+          class="text-3xl font-extrabold flex items-center gap-3 relative z-10  bg-clip-text bg-gradient-to-r from-orange-200 to-red-200">
+          <span class="text-3xl">💥</span>
           <span class="text-stroke">EQUIPO LUZ</span>
           <span class="text-3xl animate-trophy" *ngIf="equipoGanador === 'luz'">🏆</span>
         </h2>
-        <div class="relative z-10">
-          <span class="text-l font-medium text-gray-300">TOTAL:</span>
-          <span class="ml-2 text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200">
-            {{ getTotalEquipo(equipoLuz()) }}
-          </span>
-        </div>
+
       </div>
-      
+
       <div class="overflow-x-auto">
-        <table class="w-full modern-table">
+        <table class="w-full explosive-table">
           <thead>
-            <tr class="modern-table-header">
-              <th class="modern-table-th">ASESOR</th>
-              <th class="modern-table-th">EN CURSO</th>
-              <th class="modern-table-th">ACTIVAS</th>
-              <th class="modern-table-th">INSTALADAS</th>
-              <th class="modern-table-th">CANCELADAS</th>
-              <th class="modern-table-th">TOTAL</th>
+            <tr class="explosive-table-header">
+              <th class="explosive-table-th">ASESOR</th>
+              <th class="explosive-table-th">EN CURSO</th>
+              <th class="explosive-table-th">ACTIVAS</th>
+              <th class="explosive-table-th">INSTALADAS</th>
+              <th class="explosive-table-th">CANCELADAS</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let asesor of equipoLuz(); let i = index" 
-                class="modern-table-tr "
-                [ngClass]="getRowClass(asesor.total)">
-              <td class="modern-table-td font-semibold flex items-center ">
-                <span class="w-2 h-2 rounded-full mr-3 " 
-                      [ngClass]="{'bg-green-400 pulse-dot': asesor.total > 1, 'bg-yellow-400': asesor.total === 1, 'bg-red-500': asesor.total === 0}"></span>
-                <input type="text" class="bg-transparent  focus:border-yellow-400 focus:outline-none px-1 py-1 w-32" 
-                       [(ngModel)]="asesor.nombre" 
-                       (change)="guardarDatos()">
+            <tr *ngFor="let asesor of equipoLuz(); let i = index" class="explosive-table-tr "
+              [ngClass]="getRowClass(asesor.total)">
+              <td class="explosive-table-td font-semibold flex items-center ">
+                <span class="w-2 h-2 rounded-full mr-3" [ngClass]="{
+        'bg-red-500': asesor.activas <= 3, 
+        'bg-yellow-400': asesor.activas > 3 && asesor.activas <= 6, 
+        'bg-green-400 pulse-dot': asesor.activas >= 7
+      }">
+                </span>
+
+                <input type="text" class="bg-transparent focus:border-orange-400 focus:outline-none px-1 py-1 w-32"
+                  [(ngModel)]="asesor.nombre" (change)="guardarDatos()">
               </td>
-              <td class="modern-table-td">
-                <input type="number" min="0" class="bg-transparent  focus:border-yellow-400 focus:outline-none px-1 py-1 w-16 text-center text-l" 
-                       [(ngModel)]="asesor.enCurso" 
-                       (change)="actualizarTotal(asesor)">
+              <td class="explosive-table-td">
+                <input type="number" min="0"
+                  class="bg-transparent focus:border-orange-400 focus:outline-none px-1 py-1 w-16 text-center text-l"
+                  [(ngModel)]="asesor.enCurso" (change)="actualizarTotal(asesor)">
               </td>
-              <td class="modern-table-td">
-                <input type="number" min="0" class="bg-transparent  focus:border-yellow-400 focus:outline-none px-1 py-1 w-16 text-center" 
-                       [(ngModel)]="asesor.activas" 
-                       (change)="actualizarTotal(asesor)">
+              <td class="explosive-table-td">
+                <input type="number" min="0"
+                  class="bg-transparent focus:border-orange-400 focus:outline-none px-1 py-1 w-16 text-center"
+                  [(ngModel)]="asesor.activas" (change)="actualizarTotal(asesor)">
               </td>
-              <td class="modern-table-td">
-                <input type="number" min="0" class="bg-transparent  focus:border-yellow-400 focus:outline-none px-1 py-1 w-16 text-center" 
-                       [(ngModel)]="asesor.instaladas" 
-                       (change)="actualizarTotal(asesor)">
+              <td class="explosive-table-td">
+                <input type="number" min="0"
+                  class="bg-transparent focus:border-orange-400 focus:outline-none px-1 py-1 w-16 text-center"
+                  [(ngModel)]="asesor.instaladas" (change)="actualizarTotal(asesor)">
               </td>
-              <td class="modern-table-td">
-                <input type="number" min="0" class="bg-transparent  focus:border-yellow-400 focus:outline-none px-1 py-1 w-16 text-center" 
-                       [(ngModel)]="asesor.canceladas" 
-                       (change)="actualizarTotal(asesor)">
+              <td class="explosive-table-td">
+                <input type="number" min="0"
+                  class="bg-transparent focus:border-orange-400 focus:outline-none px-1 py-1 w-16 text-center"
+                  [(ngModel)]="asesor.canceladas" (change)="actualizarTotal(asesor)">
               </td>
-              <td class="modern-table-td font-bold text-xl relative">
-                {{ asesor.total }}
-              </td>
+
             </tr>
           </tbody>
         </table>
@@ -74,71 +71,67 @@
   </div>
 
   <div class="w-full max-w-6xl rounded-3xl overflow-hidden transition-all duration-700"
-       [class.winner-glow]="equipoGanador === 'melissa'">
+    [class.winner-glow]="equipoGanador === 'melissa'">
     <div class="relative">
-      <div class="absolute inset-0 rounded-3xl gold-aura animate-aura" *ngIf="equipoGanador === 'melissa'"></div>
-      
-      <div class="flex items-center justify-between px-3 py-2 relative overflow-hidden neon-blue-header">
+      <div class="absolute inset-0 rounded-3xl nocturnal-aura animate-aura" *ngIf="equipoGanador === 'melissa'"></div>
+
+      <div class="flex items-center justify-between px-3 py-2 relative overflow-hidden nocturnal-header">
         <div class="absolute inset-0 bg-black opacity-60"></div>
-        <h2 class="text-3xl font-extrabold flex items-center gap-3 relative z-10 text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-300">
-          <span class="text-3xl">🌺</span> 
+        <h2
+          class="text-3xl font-extrabold flex items-center gap-3 relative z-10  bg-clip-text bg-gradient-to-r from-purple-200 to-indigo-200">
+          <span class="text-3xl">🐺</span>
           <span class="text-stroke">EQUIPO MELISSA</span>
           <span class="text-3xl animate-trophy" *ngIf="equipoGanador === 'melissa'">🏆</span>
         </h2>
-        <div class="relative z-10">
-          <span class="text-l font-medium text-gray-300">TOTAL:</span>
-          <span class="ml-2 text-2xl font-black bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-200">
-            {{ getTotalEquipo(equipoMelissa()) }}
-          </span>
-        </div>
+
       </div>
-      
+
       <div class="overflow-x-auto">
-        <table class="w-full modern-table">
+        <table class="w-full nocturnal-table">
           <thead>
-            <tr class="modern-table-header">
-              <th class="modern-table-th">ASESOR</th>
-              <th class="modern-table-th">EN CURSO</th>
-              <th class="modern-table-th">ACTIVAS</th>
-              <th class="modern-table-th">INSTALADAS</th>
-              <th class="modern-table-th">CANCELADAS</th>
-              <th class="modern-table-th">TOTAL</th>
+            <tr class="nocturnal-table-header">
+              <th class="nocturnal-table-th">ASESOR</th>
+              <th class="nocturnal-table-th">EN CURSO</th>
+              <th class="nocturnal-table-th">ACTIVAS</th>
+              <th class="nocturnal-table-th">INSTALADAS</th>
+              <th class="nocturnal-table-th">CANCELADAS</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let asesor of equipoMelissa(); let i = index" 
-                class="modern-table-tr"
-                [ngClass]="getRowClass(asesor.total)">
-              <td class="modern-table-td font-semibold flex items-center">
-                <span class="w-2 h-2 rounded-full mr-3" 
-                      [ngClass]="{'bg-green-400 pulse-dot': asesor.total > 1, 'bg-yellow-400': asesor.total === 1, 'bg-red-500': asesor.total === 0}"></span>
-                <input type="text" class="bg-transparent  focus:border-blue-400 focus:outline-none px-1 py-1 w-32" 
-                       [(ngModel)]="asesor.nombre" 
-                       (change)="guardarDatos()">
+            <tr *ngFor="let asesor of equipoMelissa(); let i = index" class="nocturnal-table-tr"
+              [ngClass]="getRowClass(asesor.total)">
+              <td class="nocturnal-table-td font-semibold flex items-center">
+                <span class="w-2 h-2 rounded-full mr-3" [ngClass]="{
+        'bg-red-500': asesor.activas <= 3, 
+        'bg-yellow-400': asesor.activas > 3 && asesor.activas <= 6, 
+        'bg-green-400 pulse-dot': asesor.activas >= 7
+      }">
+                </span>
+
+                <input type="text" class="bg-transparent focus:border-purple-400 focus:outline-none px-1 py-1 w-32"
+                  [(ngModel)]="asesor.nombre" (change)="guardarDatos()">
               </td>
-              <td class="modern-table-td">
-                <input type="number" min="0" class="bg-transparent  focus:border-blue-400 focus:outline-none px-1 py-1 w-16 text-center" 
-                       [(ngModel)]="asesor.enCurso" 
-                       (change)="actualizarTotal(asesor)">
+              <td class="nocturnal-table-td">
+                <input type="number" min="0"
+                  class="bg-transparent focus:border-purple-400 focus:outline-none px-1 py-1 w-16 text-center"
+                  [(ngModel)]="asesor.enCurso" (change)="actualizarTotal(asesor)">
               </td>
-              <td class="modern-table-td">
-                <input type="number" min="0" class="bg-transparent  focus:border-blue-400 focus:outline-none px-1 py-1 w-16 text-center" 
-                       [(ngModel)]="asesor.activas" 
-                       (change)="actualizarTotal(asesor)">
+              <td class="nocturnal-table-td">
+                <input type="number" min="0"
+                  class="bg-transparent focus:border-purple-400 focus:outline-none px-1 py-1 w-16 text-center"
+                  [(ngModel)]="asesor.activas" (change)="actualizarTotal(asesor)">
               </td>
-              <td class="modern-table-td">
-                <input type="number" min="0" class="bg-transparent  focus:border-blue-400 focus:outline-none px-1 py-1 w-16 text-center" 
-                       [(ngModel)]="asesor.instaladas" 
-                       (change)="actualizarTotal(asesor)">
+              <td class="nocturnal-table-td">
+                <input type="number" min="0"
+                  class="bg-transparent focus:border-purple-400 focus:outline-none px-1 py-1 w-16 text-center"
+                  [(ngModel)]="asesor.instaladas" (change)="actualizarTotal(asesor)">
               </td>
-              <td class="modern-table-td">
-                <input type="number" min="0" class="bg-transparent   focus:border-blue-400 focus:outline-none px-1 py-1 w-16 text-center" 
-                       [(ngModel)]="asesor.canceladas" 
-                       (change)="actualizarTotal(asesor)">
+              <td class="nocturnal-table-td">
+                <input type="number" min="0"
+                  class="bg-transparent focus:border-purple-400 focus:outline-none px-1 py-1 w-16 text-center"
+                  [(ngModel)]="asesor.canceladas" (change)="actualizarTotal(asesor)">
               </td>
-              <td class="modern-table-td font-bold text-xl relative">
-                {{ asesor.total }}
-              </td>
+
             </tr>
           </tbody>
         </table>
